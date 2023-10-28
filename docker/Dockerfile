@@ -26,6 +26,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Installez Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --disable-tls --install-dir=/usr/local/bin --filename=composer
 
+RUN curl -sS https://get.symfony.com/cli/installer | bash
+RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
 # Installez des extensions PHP
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar dom mbstring zip gd xsl
@@ -40,7 +43,7 @@ COPY . /var/www/
 COPY ./vhosts/vhosts.conf /etc/apache2/sites-available/000-default.conf
 
 # Définissez le répertoire de travail
-WORKDIR /var/www/
+WORKDIR /var/www/project
 
 # Exposez le port 80
 EXPOSE 80
