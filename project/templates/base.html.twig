@@ -14,6 +14,20 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Navbar</a>
+            {% if app.user %}
+                <div>
+                    Bonjour {{ app.user.email }} <a class="btn btn-sm btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+                </div>
+            {% else %}
+                <div>
+                    <a class="btn btn-sm btn-primary" href="{{ path('app_register') }}">S'inscrire</a>
+                    <a class="btn btn-sm btn-success" href="{{ path('app_login') }}">Se connecter</a>
+                </div>
+            {% endif %}
+        </nav>
+        {% block body %}
+        {% endblock %}
     </body>
 </html>
