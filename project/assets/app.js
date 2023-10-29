@@ -10,3 +10,11 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+import $ from 'jquery';
+
+require('select2')
+
+$(document).ready(function() {
+    $('.select2').select2();
+});

@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <h1 class="text-center my-4">Vos tableau de bord</h1>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="d-grip d-md-flex justify-content-end">
+                    <a class="btn btn-sm btn-primary" href="{{ path('dashboard_new') }}">Ajouter <i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                {% if dashboards is defined and dashboards is not empty %}
+                    {% for dashboard in dashboards %}
+                        <div class="col-lg-4 col-md-4 col-12 mb-3">
+                            <div class="card shadow">
+                                <div class="card-header">
+                                    <h5>{{ dashboard.name }}</h5>
+                                </div>
+
+                                <div class="card-body">
+                                    <h6 class="card-title">Créé le {{ dashboard.createdAt|date('d/m/Y H:m') }} par {{ dashboard.createdBy.lastname|upper }} {{ dashboard.createdBy.firstname }}</h6>
+                                    <p class="card-text">{{ dashboard.description }}</p>
+                                    <p class="card-text"><small class="text-muted">Dernière modification : {{ dashboard.updatedAt|date('d/m/Y H:m') }}</small></p>
+                                    <div class="row">
+                                        <div class="col text-end">
+                                            <div class="d-flex justify-content-end">
+                                                <a href="{{ path('dashboard_show', {'id': dashboard.id}) }}"><i class="fas fa-eye me-2"></i></a>
+                                                {% if app.user == dashboard.createdBy %}
+                                                    <a href="{{ path('dashboard_edit', {'id': dashboard.id}) }}"><i class="fas fa-edit"></i></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-warning text-center mt-3" role="alert">
+                        Aucun tableau de bord rattaché à votre profil
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
