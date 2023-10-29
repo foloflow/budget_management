@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +37,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length:50, nullable: false)]
     private ?string $firstname = null;
+
+    #[ORM\OneToMany(mappedBy: 'createdBy', targetEntity: Dashboard::class)]
+    private Collection $dashboards;
+
+    #[ORM\ManyToMany(targetEntity: Dashboard::class, mappedBy: 'authorizedUsers')]
+    private $dashboardsAuthorized;
+
+    public function __construct()
+    {
+        $this->dashboards = new ArrayCollection();
+        $this->dashboardsAuthorized = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -126,6 +140,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFirstname(string $firstname): static
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Dashboard>
+     */
+    public function getDashboards(): Collection
+    {
+        return $this->dashboards;
+    }
+
+    public function addDashboard(Dashboard $dashboard): static
+    {
+        if (!$this->dashboards->contains($dashboard)) {
+            $this->dashboards->add($dashboard);
+            $dashboard->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDashboard(Dashboard $dashboard): static
+    {
+        if ($this->dashboards->removeElement($dashboard)) {
+            // set the owning side to null (unless already changed)
+            if ($dashboard->getCreatedBy() === $this) {
+                $dashboard->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Dashboard[]
+     */
+    public function getDashboardsAuthorized(): Collection
+    {
+        return $this->dashboardsAuthorized;
+    }
+
+    public function addDashboardAuthorized(Dashboard $dashboard): self
+    {
+        if ($this->dashboardsAuthorized->contains($dashboard)) {
+            $this->dashboardsAuthorized[] = $dashboard;
+            $dashboard->addAuthorizedUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDashboardAuthorized(Dashboard $dashboard): self
+    {
+        if ($this->dashboardsAuthorized->removeElement($dashboard))
+        {
+            $dashboard->removeAuthorizedUser($this);
+        }
 
         return $this;
     }

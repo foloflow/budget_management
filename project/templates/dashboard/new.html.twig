@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                {% if step == 'new' %}
+                    <h1 class="text-center my-4">Création tableau de bord</h1>
+                {% elseif step == 'edit' %}
+                    {% if dashboard is defined and dashboard is not empty %}
+                        <h1 class="text-center my-4">Edition tableau de bord : {{ dashboard.name }}</h1>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-12">
+                {{ form_start(form)}}
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.authorizedUsers) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

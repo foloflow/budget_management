@@ -11,7 +11,13 @@
             </div>
             <div class="col-12">
                 {% if app.user %}
-                    <p>Bienvenue {{ app.user.lastname }} {{ app.user.firstname }}</p>
+                    <h4>Bienvenue {{ app.user.lastname }} {{ app.user.firstname }}</h4>
+
+                    <div class="card shadow mt-5">
+                        <div class="card-header">
+                            <a href="{{ path('dashboard_list', {'user': app.user.id}) }}">Vos tableaux de bord</a>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>

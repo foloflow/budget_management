@@ -14,18 +14,33 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand">Navbar</a>
-            {% if app.user %}
-                <div>
-                    Bonjour {{ app.user.firstname }} <a class="btn btn-sm btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+        <nav class="navbar navbar-expand-lg" style="background-color: #3CB371">
+            <div class="container-fluid">
+                <a class="navbar-brand"><i class="fa-brands fa-symfony"></i></a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="{{ path('home') }}" class="nav-link">Accueil</a>
+                        </li>
+
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a href="{{ path('dashboard_list', {'user': app.user.id}) }}" class="nav-link">Tableau de bord</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
-            {% else %}
-                <div>
-                    <a class="btn btn-sm btn-primary" href="{{ path('app_register') }}">S'inscrire</a>
-                    <a class="btn btn-sm btn-success" href="{{ path('app_login') }}">Se connecter</a>
-                </div>
-            {% endif %}
+                {% if app.user %}
+                    <div>
+                        Bonjour {{ app.user.firstname }} <a class="btn btn-sm btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </div>
+                {% else %}
+                    <div>
+                        <a class="btn btn-sm btn-primary" href="{{ path('app_register') }}">S'inscrire</a>
+                        <a class="btn btn-sm btn-success" href="{{ path('app_login') }}">Se connecter</a>
+                    </div>
+                {% endif %}
+            </div>
         </nav>
 
         {% block body %}
