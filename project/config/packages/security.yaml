@@ -35,10 +35,10 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: '^/dashboard', roles: ROLE_USER }
 
 services:
     App\EventListener\LogoutSubscriber: ~
-    App\EventListener\LoginSubscriber: ~
 
 when@test:
     security:
