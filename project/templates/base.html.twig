@@ -18,7 +18,7 @@
             <a class="navbar-brand">Navbar</a>
             {% if app.user %}
                 <div>
-                    Bonjour {{ app.user.email }} <a class="btn btn-sm btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
+                    Bonjour {{ app.user.firstname }} <a class="btn btn-sm btn-danger" href="{{ path('app_logout') }}">Déconnexion</a>
                 </div>
             {% else %}
                 <div>
@@ -27,6 +27,7 @@
                 </div>
             {% endif %}
         </nav>
+
         {% block body %}
         {% endblock %}
     </body>

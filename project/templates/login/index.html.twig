@@ -3,19 +3,57 @@
 {% block title %}Hello LoginController!{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card shadow mb-3 mt-5">
+                    <div class="card-body">
+                        <form action="{{ path('app_login') }}" method="post">
+                            <AmpContent>
+                                {% if error %}
+                                    <div class="alert alert-danger">
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                    </div> 
+                                {% endif %}     
+                            </NonAmpContent>
+                            <AmpContent>
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        Vous êtes connecté en tant que : {{ app.user.email }},
+                                        <a href="{{ path('app_logout') }}">Se Déconnecter</a>
+                                    </div> 
+                                {% endif %}         
+                            </NonAmpContent>
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+                            <div class="card-header mb-3 text-center">Se connecter</div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+                            <div class="form-group">
+                                <label for="username" class="col-md-4 control-label">E-mail :</label>
+                                <div class="col-md-12">
+                                    <input type="email" id="username" name="_username" value="{{ last_username }}" class="form-control" required="true">
+                                </div>
+                            </div>
 
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <div class="form-group mt-3">
+                                <label for="password" class="col-md-4 control-label">Mot de passe :</label>
+                                <div class="col-md-12">
+                                    <input type="password" id="password" name="_password" class="form-control" required="true">
+                                </div>
+                            </div>
 
-        <button type="submit">login</button>
-    </form>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="form-group mt-3 mb-3 text-center">
+                                <div class="col-md-12 mx-auto">
+                                    <button class="btn btn-primary">
+                                        <i class="fa fa-btn fa-sign-in">Se connecter</i>
+                                    </button>
+                                </div>
+                            </div>                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
