@@ -35,6 +35,9 @@ class Dashboard
     #[ORM\Column]
     private ?\DateTime $updatedAt = null;
 
+    #[ORM\Column]
+    private ?int $year = null;
+
     public function __construct()
     {
         $this->authorizedUsers = new ArrayCollection();
@@ -127,5 +130,17 @@ class Dashboard
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(int $year)
+    {
+        $this->year = $year;
+
+        return $this->year;
     }
 }

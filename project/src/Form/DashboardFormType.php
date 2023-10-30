@@ -9,6 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -29,6 +30,12 @@ class DashboardFormType extends AbstractType
                 'label' => 'Description',
                 'attr' => [
                     'class' => 'tinymce',
+                ]
+            ])
+            ->add('year', IntegerType::class, [
+                'label' => 'Année',
+                'attr' => [
+                    'class' => 'form-control',
                 ]
             ])
             ->add('authorizedUsers', EntityType::class, [
