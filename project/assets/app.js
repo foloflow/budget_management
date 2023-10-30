@@ -9,12 +9,23 @@
 import './styles/app.scss';
 
 // start the Stimulus application
-import './bootstrap';
+//import './bootstrap';
 
-import $ from 'jquery';
+import 'select2';
+const $ = require('jquery');
+require('bootstrap');
 
-require('select2')
-
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     $('.select2').select2();
+
+    $('#myTabs a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+    
+    // Récupérez le mois actuel (0 pour janvier, 1 pour février, etc.)
+    var currentMonth = new Date().getMonth();
+    
+    // Activez l'onglet du mois actuel
+    $('#myTabs a:eq(' + currentMonth + ')').tab('show');
 });

@@ -20,12 +20,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a href="{{ path('home') }}" class="nav-link">Accueil</a>
+                            <a href="{{ path('home') }}" class="nav-link">{{ 'page.home'|trans }}</a>
                         </li>
 
                         {% if app.user %}
                             <li class="nav-item">
-                                <a href="{{ path('dashboard_list', {'user': app.user.id}) }}" class="nav-link">Tableau de bord</a>
+                                <a href="{{ path('dashboard_list', {'user': app.user.id}) }}" class="nav-link">{{ 'page.dashboard'|trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">{{ 'page.trends'|trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">{{ 'page.budget'|trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">{{ 'page.transactions'|trans }}</a>
                             </li>
                         {% endif %}
                     </ul>

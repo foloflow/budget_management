@@ -10,7 +10,22 @@
                 <h1 class="text-center my-4">Tableau de bord : {{ dashboard.name }}</h1>
             </div>
             <div class="col-12">
-                
+                <ul class="nav nav-tabs mb-3" id="myTabs">
+                    {% for month in months %}
+                        <li class="nav-item">
+                            <a href="#tab-{{ month.month }}" class="nav-link" data-bs-toggle="tab">
+                                {{ month.month|trans }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="tab-content" id="myTabsContent">
+                    {% for month in months %}
+                        <div class="tab-pane" id="tab-{{ month.month }}">
+                            Contenu du mois de {{ month.month|trans }}
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

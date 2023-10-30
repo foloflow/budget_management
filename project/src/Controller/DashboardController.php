@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DashboardController extends AbstractController
 {
@@ -28,10 +29,20 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/dashboard/show/{id}', 'dashboard_show')]
-    public function show(?Dashboard $dashboard): Response
+    public function show(?Dashboard $dashboard, TranslatorInterface $translator): Response
     {
+        $months = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $monthName = $translator->trans('date.month.' . $month);
+
+            $months[] = [
+                'month' => $monthName,
+            ];
+        }
+
         return $this->render('dashboard/show.html.twig', [
             'dashboard' => $dashboard,
+            'months' => $months,
         ]);
     }
 
